@@ -10,4 +10,4 @@ dependencies = [
     "python-dotenv>=1.1.1",
 ]
 [project.scripts]
-slack-mcp = "slack_mcp.main:main"
+slack-mcp = "main:run"

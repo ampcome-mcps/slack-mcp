@@ -453,7 +453,8 @@ async def main():
         await server.run(read_stream, write_stream, server.create_initialization_options())
 
 
-if __name__ == "__main__":
+def run():
+    """Run the main function in an asyncio event loop."""
     try:
         asyncio.run(main())
     except Exception as error:
