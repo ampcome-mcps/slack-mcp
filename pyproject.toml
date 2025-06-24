@@ -9,3 +9,5 @@ dependencies = [
     "mcp[cli]>=1.9.4",
     "python-dotenv>=1.1.1",
 ]
+[project.scripts]
+slack-mcp = "slack_mcp.main:main"
