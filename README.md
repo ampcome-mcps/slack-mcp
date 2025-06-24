@@ -1,6 +1,6 @@
-# Slack MPC Integration
+# Slack MCP Integration
 
-This project implements a Slack Multi-Party Chat (MPC) integration using the MCP (Multi-Party Chat Protocol) framework. It allows for seamless integration with Slack's API to manage channels, messages, and user interactions in a multi-party chat environment.
+This project implements a Slack Multi-Party Chat (MCP) integration using the MCP (Multi-Party Chat Protocol) framework. It allows for seamless integration with Slack's API to manage channels, messages, and user interactions in a multi-party chat environment.
 
 ## Features
 
@@ -50,7 +50,7 @@ python main.py
 
 ## Project Structure
 
-- `main.py`: Main application file containing the Slack client implementation and MPC server
+- `main.py`: Main application file containing the Slack client implementation and MCP server
 - `.env`: Environment configuration file
 - `.env.example`: Template for environment variables
 - `pyproject.toml`: Project configuration
