@@ -20,18 +20,19 @@ load_dotenv()
 
 
 class SlackClient:
-    def __init__(self, bot_token: str):
+    def __init__(self, bot_token: str, team_id: str):
         self.bot_headers = {
             "Authorization": f"Bearer {bot_token}",
             "Content-Type": "application/json",
         }
+        self.team_id = team_id
 
     async def get_channels(self, limit: int = 100, cursor: Optional[str] = None) -> Dict[str, Any]:
         params = {
             "types": "public_channel",
             "exclude_archived": "true",
             "limit": str(min(limit, 200)),
-            "team_id": os.environ["SLACK_TEAM_ID"],
+            "team_id": self.team_id,
         }
         
         if cursor:
@@ -124,7 +125,7 @@ class SlackClient:
     async def get_users(self, limit: int = 100, cursor: Optional[str] = None) -> Dict[str, Any]:
         params = {
             "limit": str(min(limit, 200)),
-            "team_id": os.environ["SLACK_TEAM_ID"],
+            "team_id": self.team_id,
         }
         
         if cursor:
@@ -341,21 +342,11 @@ async def nango_credentials(connection_id: str, integration_id: str) -> Dict[str
 
 
 async def main():
-    credentials = await nango_credentials(
-        connection_id=os.getenv("NANGO_CONNECTION_ID"),
-        integration_id=os.getenv("NANGO_INTEGRATION_ID"),
-    )
-    bot_token = credentials.get("credentials", {}).get("access_token")
-    team_id = credentials.get("connection_config", {}).get("team.id")
-
-    if not bot_token or not team_id:
-        print("Please set SLACK_BOT_TOKEN and SLACK_TEAM_ID environment variables", file=sys.stderr)
-        sys.exit(1)
+    """Main function to run the Slack MCP server."""
 
     print(f"Starting Slack MCP Server v1.0.0 (MCP )...", file=sys.stderr)
     
     server = Server("Slack MCP Server")
-    slack_client = SlackClient(bot_token)
 
     @server.list_tools()
     async def list_tools() -> List[Tool]:
@@ -365,6 +356,14 @@ async def main():
     @server.call_tool()
     async def call_tool(name: str, arguments: Dict[str, Any]) -> Sequence[TextContent]:
         print(f"Received CallToolRequest: {name}", file=sys.stderr)
+        credentials = await nango_credentials(
+            connection_id=os.getenv("NANGO_CONNECTION_ID"),
+            integration_id=os.getenv("NANGO_INTEGRATION_ID"),
+        )
+        bot_token = credentials.get("credentials", {}).get("access_token")
+        team_id = credentials.get("connection_config", {}).get("team.id")
+            
+        slack_client = SlackClient(bot_token=bot_token, team_id=team_id)
         
         try:
             if name == "slack_list_channels":
