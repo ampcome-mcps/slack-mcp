@@ -82,7 +82,7 @@ Add this configuration to your Claude Desktop config file:
   "mcpServers": {
     "slack": {
       "command": "uvx",
-      "args": ["git+https://github.com/Shameerpc5029/slack-mcp.git"],
+      "args": ["git+https://github.com/ampcome-mcps/slack-mcp.git"],
       "env": {
         "NANGO_BASE_URL": "NANGO BASE URL",
         "NANGO_SECRET_KEY":"ENTER YOUR NANAGO SECRET KEY",
