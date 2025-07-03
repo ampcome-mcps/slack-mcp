@@ -45,11 +45,6 @@ pip install -e .
 Create a `.env` file in the project root with the following variables:
 
 ```env
-# Direct Slack configuration
-SLACK_BOT_TOKEN=xoxb-your-bot-token-here
-SLACK_TEAM_ID=T1234567890
-
-# Nango configuration (if using Nango for credential management)
 NANGO_BASE_URL=https://api.nango.dev
 NANGO_SECRET_KEY=your-nango-secret-key
 NANGO_CONNECTION_ID=your-connection-id
